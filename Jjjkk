@@ -1,0 +1,91 @@
+You should write these validations within the `handleSubmit` function of your form component. This is where you'll check the user's input when they attempt to submit the form. Here's the relevant part of your code with the validations integrated into the `handleSubmit` function:
+
+```jsx
+const handleSubmit = (e) => {
+  e.preventDefault();
+
+  // Category Validation
+  if (formData.category === '--SELECT OPTION--') {
+    alert('Please select a valid category.');
+    return;
+  }
+
+  // Amount Validation
+  if (formData.amount === '' || parseFloat(formData.amount) <= 0) {
+    alert('Please enter a valid amount greater than 0.');
+    return;
+  }
+
+  // Receipt Validation
+  if (!formData.receipt) {
+    alert('Please upload a receipt.');
+    return;
+  }
+
+  // Date Validation
+  if (formData.date === '') {
+    alert('Please select a valid date.');
+    return;
+  }
+
+  // If all validations pass, you can submit the form or perform additional actions
+  console.log(formData);
+};
+```
+Certainly, here are some detailed validations you can add to your form to ensure data integrity and improve the user experience:
+
+1. **Category Validation**:
+   - Ensure that the user selects a valid category from the dropdown list. The default option `--SELECT OPTION--` should not be considered valid.
+
+   ```jsx
+   if (formData.category === '--SELECT OPTION--') {
+     alert('Please select a valid category.');
+     return;
+   }
+   ```
+
+2. **Amount Validation**:
+   - Verify that the amount is a positive number. You can check if the amount is greater than zero.
+
+   ```jsx
+   if (formData.amount === '' || parseFloat(formData.amount) <= 0) {
+     alert('Please enter a valid amount greater than 0.');
+     return;
+   }
+   ```
+
+3. **Receipt Validation**:
+   - Ensure that the user uploads a receipt. This check verifies that the `receipt` field is not empty.
+
+   ```jsx
+   if (!formData.receipt) {
+     alert('Please upload a receipt.');
+     return;
+   }
+   ```
+
+4. **Date Validation**:
+   - Validate the date format and make sure it's not empty. You can check for a valid date format (e.g., DD-MM-YYYY) and that the field is not left empty.
+
+   ```jsx
+   if (formData.date === '') {
+     alert('Please select a valid date.');
+     return;
+   }
+   ```
+
+5. **File Type Validation (Optional)**:
+   - If necessary, you can check if the uploaded file is of a specific type (e.g., image or document). For example, if you only want image files, you can check the file extension.
+
+   ```jsx
+   const allowedExtensions = ['.jpg', '.jpeg', '.png', '.pdf', '.docx'];
+   const fileExtension = formData.receipt.name.slice(((formData.receipt.name.lastIndexOf(".") - 1) >>> 0) + 2);
+
+   if (!allowedExtensions.includes('.' + fileExtension.toLowerCase())) {
+     alert('Invalid file type. Please upload a valid file (jpg, jpeg, png, pdf, docx).');
+     return;
+   }
+   ```
+
+These validations help ensure that the data entered by the user is valid and meets your criteria. Depending on your specific requirements and the data you're collecting, you can further customize these validations or add additional ones as needed. Additionally, consider providing clear error messages to guide users when their inputs are invalid.
+By placing these validations in the `handleSubmit` function, you ensure that they are executed when the user attempts to submit the form. If any of the validations fail, it will show an alert message, preventing the form from being submitted until valid data is entered. This provides a smooth user experience and helps maintain data integrity.
